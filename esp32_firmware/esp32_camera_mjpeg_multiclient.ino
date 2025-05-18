@@ -647,8 +647,10 @@ void showWifiMenu() {
     display.print("Vratit sa");
 
     display.display();
-}
+}  
+
 void connectToWiFi(int networkIndex) {
+
   if (networkIndex >= wifiCount) {
     Serial.println("Invalid network index.");
     return;
