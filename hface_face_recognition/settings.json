@@ -1,0 +1,5 @@
+{
+  "resolution": "640x480",
+  "model_dir": "C:/Users/Ryzen/h/hface/hface_face_recognition/Silent-Face-Anti-Spoofing-master/resources/anti_spoof_models",
+  "recognition_model": "Facenet512"
+}

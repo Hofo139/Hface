@@ -1,0 +1,60 @@
+===========================================
+     HFACE 2.0 - Inštrukcie na spustenie
+===========================================
+
+Popis:
+HFACE 2.0 je desktopová aplikácia pre rozpoznávanie tvárí v reálnom čase s anti-spoofing detekciou.
+Používa ESP32-CAM ako kameru, SQLite databázu, GUI v CustomTkinter.
+
+Platforma:
+- Windows 10/11 (odporúčané)
+- Python 3.10 alebo novší (64-bit)
+
+-------------------------------------------
+               Inštalácia
+-------------------------------------------
+
+1. Stiahni alebo naklonuj projekt - 
+
+2. Nainštaluj všetky knižnice - pip install -r requirements.txt
+
+3. Stiahni DeepFace modely - model.py
+
+4. 
+
+-------------------------------------------
+          Štruktúra priečinkov
+-------------------------------------------
+
+- hface_ver_3.py                → hlavný súbor
+- settings.json                 → nastavenia (rozlíšenie, zvolemý model, !absolútna cesta k anti-spoof modelom!)
+- Log.csv                       → log rozpoznaných užívateľov
+- hface.db                      → databáza naskenovaných užívateľov
+- assets/logo.png               → logo pre GUI
+
+-------------------------------------------
+	  Spustenie aplikácie
+-------------------------------------------
+
+1. python hface_ver_3.py (alebo zmen hface.bat absolútnu cestu a púšťaj cez .bat)
+2. Log údaje pre vstup do admin menu : Lukas, 1234
+
+-------------------------------------------
+	  Riešenie problémov
+-------------------------------------------
+
+Problém: `JSONDecodeError` pri štarte  
+Riešenie: Oprav súbor `settings.json` → nahraď spätné lomky `\` za `\\` alebo použi `/`
+
+Problém: Video-Stream sa nezobrazuje  
+Skontroluj, či je kamera zapnutá a adresa v `network_profiles` je správna
+
+
+-------------------------------------------
+		 Autor
+-------------------------------------------
+
+Projekt: HFACE 2.0  
+Autor: Lukáš Hofierka  
+Výskum: Bakalárska práca - Inteligentný IoT terminál
+
