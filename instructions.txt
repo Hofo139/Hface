@@ -1,3 +1,4 @@
+SK
 ===========================================
      HFACE 2.0 - Inštrukcie na spustenie
 ===========================================
@@ -14,7 +15,7 @@ Platforma:
                Inštalácia
 -------------------------------------------
 
-1. Stiahni alebo naklonuj projekt - 
+1. Stiahni alebo naklonuj projekt - https://github.com/Hofo139/Hface.git
 
 2. Nainštaluj všetky knižnice - pip install -r requirements.txt
 
@@ -57,4 +58,72 @@ Skontroluj, či je kamera zapnutá a adresa v `network_profiles` je správna
 Projekt: HFACE 2.0  
 Autor: Lukáš Hofierka  
 Výskum: Bakalárska práca - Inteligentný IoT terminál
+
+
+ENG
+===========================================
+          HFACE 2.0 - Setup Guide
+===========================================
+
+Description:
+HFACE 2.0 is a real-time face recognition desktop application with anti-spoofing detection.
+It uses ESP32-CAM as the camera, SQLite for database, and a CustomTkinter-based GUI.
+
+Platform:
+- Windows 10/11 (recommended)
+- Python 3.10 or newer (64-bit)
+
+-------------------------------------------
+               Installation
+-------------------------------------------
+
+1. Download or clone the project - https://github.com/Hofo139/Hface.git
+
+2. Install all dependencies:
+   pip install -r requirements.txt
+
+3. Download DeepFace models:
+   Run model.py 
+
+4. (Optional) Set camera IP and model directory in settings.json
+
+-------------------------------------------
+          Folder Structure
+-------------------------------------------
+
+- hface_ver_3.py                → main application file
+- settings.json                 → configuration (resolution, selected model, path to anti-spoof models!)
+- Log.csv                       → log of recognized users
+- hface.db                      → SQLite database of scanned users
+- assets/logo.png               → GUI logo
+
+-------------------------------------------
+          Launching the App
+-------------------------------------------
+
+1. Run the app using:
+   python hface_ver_3.py
+   (or create a .bat file with absolute path to launch easily)
+
+2. Admin login credentials:
+   Username: Lukas
+   Password: 1234
+
+-------------------------------------------
+         Troubleshooting
+-------------------------------------------
+
+Issue: `JSONDecodeError` on startup  
+Fix: Open `settings.json` and replace backslashes `\` with `\\` or use forward slashes `/`
+
+Issue: Video stream not displaying  
+Check if the ESP32-CAM is online and IP address in `network_profiles` is correct.
+
+-------------------------------------------
+              Author
+-------------------------------------------
+
+Project: HFACE 2.0  
+Author: Lukáš Hofierka  
+Research: Bachelor's Thesis – Intelligent IoT Terminal
 
