@@ -32,6 +32,6 @@
 ::
 ::978f952a14a936cc963da21a135fa983
 @echo off
-cd /d "C:\Users\Ryzen\h\hface\Hface\Silent-Face-Anti-Spoofing-master"
+cd /d "Cesta/k/python/app/"
 python hface_ver_3.py
 pause
