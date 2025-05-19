@@ -210,7 +210,7 @@ def scan_new_user():
 
 def manage_users():
     while True:
-        users = [f for f in os.listdir(DATABASE_FOLDER) if f.lower().endswith(('.jpg', '.jpeg', '.png'))]
+        users = [d for d in os.listdir(DATABASE_FOLDER) if os.path.isdir(os.path.join(DATABASE_FOLDER, d))]
         if not users:
             print("[INFO] Žiadni používatelia.")
             return
@@ -226,13 +226,16 @@ def manage_users():
         try:
             idx = int(choice) - 1
             if 0 <= idx < len(users):
-                file_to_delete = os.path.join(DATABASE_FOLDER, users[idx])
-                os.remove(file_to_delete)
+                user_dir = os.path.join(DATABASE_FOLDER, users[idx])
+                # zmaž celý priečinok používateľa
+                import shutil
+                shutil.rmtree(user_dir)
                 print(f"[VYMAZANÉ] {users[idx]}")
             else:
                 print("[CHYBA] Neplatná voľba.")
         except ValueError:
             print("[CHYBA] Zadaj číslo.")
+
 
 # === KONZOLOVÉ MENU ===
 def console_menu():
@@ -252,7 +255,7 @@ def console_menu():
         volba = input("Tvoja voľba (1–5): ").strip()
 
         if volba == "1":
-            users = [f for f in os.listdir(DATABASE_FOLDER) if f.lower().endswith(('.jpg', '.jpeg', '.png'))]
+            users = [d for d in os.listdir(DATABASE_FOLDER) if os.path.isdir(os.path.join(DATABASE_FOLDER, d))]
             print("\n[INFO] Používatelia:")
             for u in users:
                 print("•", os.path.splitext(u)[0])
