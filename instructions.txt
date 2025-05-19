@@ -3,6 +3,7 @@ SK
      HFACE 2.0 - Inštrukcie na spustenie
 ===========================================
 
+
 Popis:
 HFACE 2.0 je desktopová aplikácia pre rozpoznávanie tvárí v reálnom čase s anti-spoofing detekciou.
 Používa ESP32-CAM ako kameru, SQLite databázu, GUI v CustomTkinter.
@@ -127,3 +128,168 @@ Project: HFACE 2.0
 Author: Lukáš Hofierka  
 Research: Bachelor's Thesis – Intelligent IoT Terminal
 
+
+
+===========================================
+     	ESP32Cam + Wemos D1 R32
+===========================================
+SK
+
+Popis:
+Tento systém využíva ESP32-CAM na streamovanie obrazu a Wemos D1 R32 na ovládanie LED a zámku. ESP32-CAM odosiela fotky na server pomocou HTTP /upload endpointu pre rozpoznávanie tvárí.
+
+Platforma:
+
+Arduino IDE
+Model: Ai Thinker ESP32-CAM + Wemos D1 R32
+
+Inštalácia firmvéru  
+
+1. Nainštaluj Arduino IDE a vyber dosku:
+   Ai Thinker ESP32-CAM (pre ESP32-CAM)
+   Esp32 Wroom (pre Wemos D1 R32)
+
+2. ESP32-CAM:
+   Otvor sketch esp32_camera_mjpeg_multiclient.ino z priečinka esp32_firmware/
+   Uprav podľa potreby (napr. IP adresa servera, endpoint /upload)
+   Nahraj na ESP32-CAM
+
+3. Wemos D1 R32:
+   Otvor led_control.ino
+   Nahraj sketch – tento modul ovláda LED a zámok
+
+4. Skontroluj sériový monitor v Arduino IDE:
+   Po nahratí sa zobrazia IP adresy oboch dosiek
+   Skopíruj ich a vlož do Python aplikácie (wemos ip - funkcia send_led_color, esp32cam ip -   esp32cam_urls)
+
+5. Po nahratí firmvéru  
+   ESP32-CAM poskytuje MJPEG stream na /rozlisenie.mjpeg
+   Fotografie sa odosielajú cez /upload na server
+   Wemos D1 R32 ovláda LED a relé zámku cez HTTP 
+
+===========================================
+         ESP32-CAM + Wemos D1 R32
+===========================================
+
+ENG
+
+Description:
+This system uses the ESP32-CAM for video streaming and the Wemos D1 R32 to control the LED and the lock. The ESP32-CAM sends photos to the server using the HTTP /upload endpoint for face recognition.
+
+Platform:
+
+Arduino IDE  
+Board: Ai Thinker ESP32-CAM + Wemos D1 R32
+
+Firmware Installation
+
+1. Install the Arduino IDE and select the board:
+   Ai Thinker ESP32-CAM (for ESP32-CAM)
+   Esp32 Wroom (for Wemos D1 R32)
+
+2. ESP32-CAM:
+   Open the sketch esp32_camera_mjpeg_multiclient.ino from the esp32_firmware/ folder  
+   Modify as needed (e.g., server IP address, /upload endpoint)  
+   Upload to the ESP32-CAM
+
+3. Wemos D1 R32:
+   Open led_control.ino  
+   Upload the sketch – this module controls the LED and the lock
+
+4. Check the Serial Monitor in Arduino IDE:
+   After uploading, the IP addresses of both boards will be displayed  
+   Copy them and paste them into the Python application  
+   (Wemos IP – used in send_led_color function, ESP32-CAM IP – used in esp32cam_urls)
+
+5. After firmware upload  
+   ESP32-CAM provides MJPEG stream at /resolution.mjpeg  
+   Photos are sent to the server via /upload  
+   Wemos D1 R32 controls the LED and lock relay via HTTP
+
+
+===========================================
+     		Server
+===========================================
+SK
+
+Popis:
+Serverová časť vykonáva rozpoznávanie tvárí. Prijíma fotky z ESP32-CAM cez /upload endpoint, vytvára embeddingy a ukladá ich pre neskoršie porovnávanie.
+
+Platforma:
+
+VPS s Linuxom (Ubuntu 20.04 alebo novší)
+Python 3.8+
+Prístup cez FTP/SFTP a SSH
+
+Inštalácia na server  
+
+1. Pripoj sa cez FTP/SFTP na tvoj VPS
+
+2. Nahraj súbor recog.py do vybraného priečinka
+
+3. Pripoj sa cez SSH
+   Mac/Linux: ssh meno@ip_adresa
+   Windows: Použi Putty alebo iný SSH klient
+
+4. Nainštaluj potrebné balíčky:
+   sudo apt update  
+   sudo apt install python3-pip cmake  
+   pip3 install keras tensorflow face_recognition dlib flask requests
+
+5. Spusti rozpoznávací skript:
+   python3 recog.py  
+
+Používanie konzoly  
+
+6. Po spustení sa zobrazí konzolové menu
+7. Vyber možnosť Sken – získa sa 10 fotiek z ESP32-CAM cez /upload
+8. Fotky sa uložia do priečinka hface_db/meno_uzivatela/1-10.png
+9. Po dokončení skenovania reštartuj skript (ctrl + c, python3 recog.py)
+
+Po rozpoznaní tváre sa:
+   zobrazí meno na OLED displeji
+   rozsvieti sa zelená LED
+
+
+===========================================
+              Server
+===========================================
+EN
+
+Description:
+The server part performs face recognition. It receives photos from ESP32-CAM via the /upload endpoint, creates embeddings, and stores them for later comparison.
+
+Platform:
+
+VPS with Linux (Ubuntu 20.04 or newer)
+Python 3.8+
+Access via FTP/SFTP and SSH
+
+Server Installation
+
+1. Connect to your VPS via FTP/SFTP
+
+2. Upload the recog.py file to the selected directory
+
+3. Connect via SSH
+   Mac/Linux: ssh username@ip_address
+   Windows: Use Putty or another SSH client
+
+4. Install required packages:
+   sudo apt update  
+   sudo apt install python3-pip cmake  
+   pip3 install keras tensorflow face_recognition dlib flask requests
+
+5. Run the recognition script:
+   python3 recog.py  
+
+Using the Console
+
+6. After starting, the console menu will appear
+7. Select the Scan option – 10 photos are taken from ESP32-CAM via /upload
+8. The photos are saved to the folder hface_db/username/1-10.png
+9. After scanning is complete, restart the script (ctrl + c, python3 recog.py)
+
+After face recognition:
+   the name is displayed on the OLED display
+   the green LED lights up
